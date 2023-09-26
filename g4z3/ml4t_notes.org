@@ -57,3 +57,26 @@
 ** Quotes
 
 - Nassim Taleb: life is long gamma
+
+
+* Journal
+
+- [2023-09-26 Tue]
+  - basic workflow of a machine learning task
+    - problem definition: regression, classification, clustering, etc.
+      - for algorithmic trading, it's usually regression
+    - preparing data
+    - feature engineering
+      - finding the most influential features
+      - pre-processing features (e.g. normalization)
+    - model selection
+      - cross validation
+    - hyper-parameter tuning
+      - hyper-parameters are parameters that cannot be learned from the data
+      - grid search
+    - post-training analysis
+      - learning curve
+  - concepts
+    - mutual information: finding the most influential features
+  - tools
+    - yellowbricks
