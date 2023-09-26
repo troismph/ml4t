@@ -1,0 +1,52 @@
+#+TITLE:  ml4t Notes
+
+* Noisy Signals
+
+- Kalman filter
+  - KF's "hidden state" and "observation" are all random vectors, or multivariate random variables. see wikipedia
+- Wavelets
+
+* Evaluations
+
+- Alpha: the average return in excess of a benchmark
+- tools
+  - Zipline: backtest pipeline
+  - Alphalens: multi-facet measurements on factors
+- Evaluations (of factor)
+  - IR: information ratio, alpha divided by the tracking risk (of the benchmark)
+    - \( \frac{\alpha}{\sigma_{\alpha}} \)
+    - when the benchmark is the risk-free rate, IR is the Sharpe ratio
+  - IC: information coefficient, correlation between predicted and actual returns
+    - Spearman rank correlation between predicted and actual returns
+- Portfolio management
+  - Kelly criterion: [[https://en.wikipedia.org/wiki/Kelly_criterion][wikipedia]]
+    - how to size a bet
+  - Diversification is protection against ignorance. It makes little sense if you know what you are doing. - Warren Buffet
+  - the fundamental law of active management:
+    - \( IR \approx IC * \sqrt{breadth} \)
+    - play well (IC) and play a lot (breadth)
+  - Mean-variance portfolio optimization
+    - expected return vs. risk (variance)
+    - efficient frontier
+    - various methods to optimize
+      - vs. the naive 1/N portfolio
+    - when to use: your algorithm outputs a vector of weights, now optimize these weights with above methods to improve
+  - pyfolio: portfolio and risk analytics in python
+    - Alphalens is for factors
+
+
+* ML in trading
+
+- basic walk-through
+  - prediction vs. inference
+    - prediction: the "inference" as in AI
+    - inference: explanation how the outcomes (maybe governed by prediction) are generated
+
+* Misc
+** Concepts
+
+- Lagged return: returns from previous periods as input variables or features to compute new values (e.g. feature, model)
+
+** Tools
+- TA-Lib: technical analysis lib. originally written in C++ , popularized by a python binding. see https://github.com/TA-Lib/ta-lib-python
+- Seaborn: data visualization toolkit
