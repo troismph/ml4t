@@ -41,6 +41,7 @@
   - prediction vs. inference
     - prediction: the "inference" as in AI
     - inference: explanation how the outcomes (maybe governed by prediction) are generated
+      - statistical association of variables (in the context of prediction, also includes the association between the input and output)a
 
 * Misc
 ** Concepts
@@ -50,3 +51,9 @@
 ** Tools
 - TA-Lib: technical analysis lib. originally written in C++ , popularized by a python binding. see https://github.com/TA-Lib/ta-lib-python
 - Seaborn: data visualization toolkit
+- Yellowbrick: extension on scikit-learn for visualization, especially in cross validation & model selection
+
+
+** Quotes
+
+- Nassim Taleb: life is long gamma
