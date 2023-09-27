@@ -43,6 +43,13 @@
     - inference: explanation how the outcomes (maybe governed by prediction) are generated
       - statistical association of variables (in the context of prediction, also includes the association between the input and output)a
 
+* Linear Models
+
+- Heteroskedasticity & Homoskedasticity:
+  - definition of heteroskedasticity: the variance of the error term is not constant
+  - [[file:Linear_Models/2023-09-27_14-12-27_screenshot.png]]
+
+
 * Misc
 ** Concepts
 
@@ -57,6 +64,12 @@
 ** Quotes
 
 - Nassim Taleb: life is long gamma
+
+
+* Maybe TODO
+
+- play with data from [[https://blog.curtii.com/blog/posts/wordscapes-the-casino-in-your-pocket/]["the casino in your pocket"]]
+  - [[file:~/src/ml4t/data/mt-fortune.xlsx][data file]]
 
 
 * Journal
@@ -80,3 +93,20 @@
     - mutual information: finding the most influential features
   - tools
     - yellowbricks
+- [2023-09-27 Wed]
+  - linear models
+    - OLS: ordinary least squares
+    - stochastic gradient descent
+  - concepts
+    - heteroskedasticity
+    - homoskedasticity
+  - tools
+    - statsmodels
+  - understanding linear model summary
+    - data characteristics
+    - model characteristics: R-squared, F-statistic, P-value
+    - residual analysis: Omnibus, Skew, Kurtosis, Durbin-Watson, Jarque-Bera, Condition Number
+  - Fama-Macbeth regression: a method to create linear model based on Fama-French 5 factors
+    - with ready-to-use open source implementation
+      - from linearmodels.asset_pricing import LinearFactorModel
+    - the notebook [[file:~/src/ml4t/07_linear_models/02_fama_macbeth.ipynb][02_fama_macbeth.ipynb]] spends a lot of time explaining Fama-Macbeth regression, and actually we can simply use the above open source implementation
