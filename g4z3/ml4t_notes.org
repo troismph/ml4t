@@ -48,6 +48,12 @@
 - Heteroskedasticity & Homoskedasticity:
   - definition of heteroskedasticity: the variance of the error term is not constant
   - [[file:Linear_Models/2023-09-27_14-12-27_screenshot.png]]
+- explanation of model.summary()
+  - [[https://medium.com/swlh/interpreting-linear-regression-through-statsmodels-summary-4796d359035a][from_medium]]
+- hedging against over fitting: control parameter size by adding penalty on parameter size (shrinkage methods)
+  - ridge regression
+  - lasso model
+  - elastic net regression
 
 
 * Misc
@@ -110,3 +116,7 @@
     - with ready-to-use open source implementation
       - from linearmodels.asset_pricing import LinearFactorModel
     - the notebook [[file:~/src/ml4t/07_linear_models/02_fama_macbeth.ipynb][02_fama_macbeth.ipynb]] spends a lot of time explaining Fama-Macbeth regression, and actually we can simply use the above open source implementation
+- [2023-09-28 Thu]
+  - let's start playing by first replicate the results in the book
+    - preparing data
+  - it's a good tutorial on pandas and np
