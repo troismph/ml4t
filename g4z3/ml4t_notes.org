@@ -120,3 +120,7 @@
   - let's start playing by first replicate the results in the book
     - preparing data
   - it's a good tutorial on pandas and np
+- [2023-10-04 Wed]
+  - continuing from last break point
+  - bewildered
+    - the columns named "return_{n}d_lag{t}", what's the purpose?
