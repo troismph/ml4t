@@ -47,14 +47,151 @@
 
 - Heteroskedasticity & Homoskedasticity:
   - definition of heteroskedasticity: the variance of the error term is not constant
-  - [[file:Linear_Models/2023-09-27_14-12-27_screenshot.png]]
+  - for examples, visit [[https://en.wikipedia.org/wiki/Homoscedasticity_and_heteroscedasticity][wikipedia link]]
 - explanation of model.summary()
-  - [[https://medium.com/swlh/interpreting-linear-regression-through-statsmodels-summary-4796d359035a][from_medium]]
+  - try GPT. the top results from medium seems inaccurate
 - hedging against over fitting: control parameter size by adding penalty on parameter size (shrinkage methods)
   - ridge regression
   - lasso model
   - elastic net regression
+- \( JB = \frac{n}{6} \left(S^2 + \frac{(K - 3)^2}{4}\right) \)
+  - S: skewness
+  - K: kurtosis
 
+** Model Summary Explained
+
+- Training Samples: X, y
+  - every sample of X contains a leading constant 1, which is the intercept
+  - typical process:
+    - given samples _X shape (n, p), y shape (n, 1)
+      - n samples, p features
+    - add a leading constant 1 to _X, producing X. now X shape (n, p+1)
+      - X = statsmodel.api.add_constant(_X)
+    - the equation is \( \hat{y} = X\beta \)
+      - \( \hat{y} \): predicted y
+      - \( \beta \): coefficients
+    - \( \beta_0 \) is the intercept (a constant)
+
+- No. Observations: sample count (length of X or y)
+- Df Model: number of features (columns of X, excluding the const)
+- Df Residuals: degrees of freedom of residuals (No. Observations - Df Model - 1)
+- R-squared: coefficient of determination
+  - in range [0, 1], 1 the best (all variations of y are explained by the model)
+  - \( R^2 = 1 - \frac{SS_{res}}{SS_{tot}} \)
+  - \( SS_{res} = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \)
+  - \( SS_{tot} = \sum_{i=1}^{n} (y_i - \bar{y})^2 \)
+- Adj. R-squared: adjusted R-squared, penalty on number of features (to hedge against overfitting)
+  - in range [0, 1], 1 the best (all variations of y are explained by the model)
+  - \( R^2_{adj} = 1 - \frac{SS_{res} / (n - p - 1)}{SS_{tot} / (n - 1)} \)
+  - \( p \): number of features
+- F-statistic & Prob (F-statistic): F-statistic and its p-value
+  - test against a null-hypothesis: all coefficients are zero
+  - looking for large F-statistic value and small p-value
+  - \( F = \frac{(SS_{tot} - SS_{res}) / p}{SS_{res} / (n - p - 1)} \)
+- Log-likelihood: given the model, the (logged) probability of observing the data (y)
+  - it's always negative, the more negative the better
+- AIC & BIC: Akaike information criterion & Bayesian information criterion
+  - both are measures of the relative quality of a statistical model for a given set of data
+  - the lower the better
+  - AIC: \( AIC = 2k - 2ln(L) \)
+  - BIC: \( BIC = kln(n) - 2ln(L) \)
+  - \( k \): number of features
+  - \( n \): number of observations
+  - \( L \): log-likelihood
+- coefficients table
+  - std err
+    - most equations online are only valid when _X has shape (n, 1)
+    - the smaller the better
+  - t-value
+    - the significance of the coefficient (compared to other coefficients)
+  - P>|t|
+    - null hypothesis: the coefficient is measured by chance (not representing the true value)
+    - lower is better
+  - [0.025 0.975]
+    - 95% confidence interval that the true value of the coefficient is in
+- Omnibus
+  - null hypothesis: the residuals are normally distributed
+  - value 0 means the residuals are normally distributed
+- Skew
+  - [[https://en.wikipedia.org/wiki/Skewness#Introduction][wikipedia link]]
+  - measurements of sample data symmetry
+  - 0 means perfectly symmetric, negative means left tail longer, positive means right tail longer
+- Kurtosis
+  - [[https://en.wikipedia.org/wiki/Kurtosis#Pearson_moments][wikipedia link]]
+  - measurements of sample data peakedness
+  - 3 means normal distribution, < 3 means flatter, > 3 means more peaked
+  - code to show
+    #+begin_src python :results file link :var fname="images/kurtosis.png"
+      import matplotlib.pyplot as plt
+      import numpy as np
+      from scipy.stats import norm, laplace, uniform
+
+      # Define the distributions
+      x = np.linspace(-5, 5, 1000)
+      normal = norm.pdf(x, 0, 1)  # normal distribution, mesokurtic
+      laplacian = laplace.pdf(x, 0, 1 / np.sqrt(2))  # double exponential distribution, leptokurtic
+      uniform_pdf = uniform.pdf(x, -np.sqrt(3), 2 * np.sqrt(3))  # uniform distribution, platykurtic
+
+      # Create the plots
+      plt.figure(figsize=(10, 6))
+      plt.plot(x, normal, label='Normal distribution (Mesokurtic)')
+      plt.plot(x, laplacian, label='Laplace distribution (Leptokurtic, kurtosis > 3)')
+      plt.plot(x, uniform_pdf, label='Uniform distribution (Platykurtic, kurtosis < 3)')
+
+      # Customize the plot
+      plt.title('Examples of Mesokurtic, Leptokurtic, and Platykurtic Distributions')
+      plt.xlabel('X')
+      plt.ylabel('Probability Density')
+      plt.legend()
+
+      # Show the plot
+      plt.savefig(fname)
+      return fname
+    #+end_src
+
+    #+RESULTS:
+    [[file:images/kurtosis.png]]
+- Durbin-Watson
+  - [[https://en.wikipedia.org/wiki/Durbin%E2%80%93Watson_statistic][wikipedia link]]
+  - measurements of sample data autocorrelation
+  - 2 means no autocorrelation, 0 means perfect positive autocorrelation, 4 means perfect negative autocorrelation
+- Jarque-Bera (JB) & Prob(JB)
+  - alternative method like Omnibus
+  - [[https://en.wikipedia.org/wiki/Jarque%E2%80%93Bera_test][wikipedia link]]
+  - null hypothesis: the residuals are normally distributed
+  - value 0 means the residuals are normally distributed
+- Condition Number
+  - [[https://en.wikipedia.org/wiki/Condition_number][wikipedia link]]
+  - to help detect multicollinearity, which occurs when two or more predictor variables in a model are highly correlated
+  - A condition number of 1 indicates no multicollinearity.
+  - As the condition number increases, so does the severity of multicollinearity.
+  - A common rule of thumb is that if the condition number is greater than 30, the regression may have significant multicollinearity.
+
+* Statistics basics
+
+** null-hypothesis testing: proof by contradiction?
+
+definitions from GPT:
+
+#+BEGIN_QUOTE
+
+**Null Hypothesis Testing** is a statistical method used to make inferences or draw conclusions about population parameters based on a sample data. Here are the fundamental concepts involved:
+
+1. **Null Hypothesis (H0)**: The null hypothesis is a statement of no effect, no difference, or status quo. For example, if you're testing a new medication, your null hypothesis might be that there's no difference between the effectiveness of the new medication and the existing one.
+
+2. **Alternative Hypothesis (H1 or Ha)**: The alternative hypothesis is a statement that contradicts the null hypothesis. It's what you might believe to be true or hope to prove true. In the medication example, the alternative hypothesis might be that the new medication is more effective than the existing one.
+
+3. **Test Statistic**: The test statistic is a numerical value calculated from the sample data. The type of test statistic depends on the type of data and the specific hypothesis test being performed. Common examples include the Z-score in a Z-test and the t-statistic in a t-test.
+
+4. **P-value**: The p-value is a probability that measures the evidence against the null hypothesis. More specifically, it's the probability of obtaining the observed data (or data more extreme), assuming the null hypothesis is true. A small p-value (typically ≤ 0.05) indicates strong evidence against the null hypothesis, so you reject the null hypothesis. A large p-value (> 0.05) indicates weak evidence against the null hypothesis, so you fail to reject the null hypothesis.
+
+5. **Significance Level (α)**: The significance level, often denoted by alpha (α), is a threshold used to determine whether the p-value is small enough to reject the null hypothesis. Common choices for α are 0.1, 0.05, and 0.01, indicating a willingness to accept a 10%, 5%, or 1% chance, respectively, of incorrectly rejecting the null hypothesis (Type I error).
+
+6. **Type I and Type II Errors**: A Type I error occurs when we reject a true null hypothesis (false positive), and the probability of making a Type I error is α. A Type II error occurs when we fail to reject a false null hypothesis (false negative).
+
+These are the fundamental concepts in null hypothesis testing. The specifics can vary depending on the exact test being used and the nature of the data, but the overall process of forming hypotheses, calculating a test statistic, and comparing the p-value to a significance level to make a decision, remains the same.
+
+#+END_QUOTE
 
 * Misc
 ** Concepts
@@ -76,6 +213,40 @@
 
 - play with data from [[https://blog.curtii.com/blog/posts/wordscapes-the-casino-in-your-pocket/]["the casino in your pocket"]]
   - [[file:~/src/ml4t/data/mt-fortune.xlsx][data file]]
+
+
+* Appendix
+
+** Kurtosis samples
+
+#+begin_src python :results file link :var fname="images/normal_laplace_uniform.png"
+  import matplotlib.pyplot as plt
+  import numpy as np
+  from scipy.stats import norm, laplace, uniform
+
+  # Define the distributions
+  x = np.linspace(-5, 5, 1000)
+  normal = norm.pdf(x, 0, 1)  # normal distribution, mesokurtic
+  laplacian = laplace.pdf(x, 0, 1 / np.sqrt(2))  # double exponential distribution, leptokurtic
+  uniform_pdf = uniform.pdf(x, -np.sqrt(3), 2 * np.sqrt(3))  # uniform distribution, platykurtic
+
+  # Create the plots
+  plt.figure(figsize=(10, 6))
+  plt.plot(x, normal, label='Normal distribution (Mesokurtic)')
+  plt.plot(x, laplacian, label='Laplace distribution (Leptokurtic, kurtosis > 3)')
+  plt.plot(x, uniform_pdf, label='Uniform distribution (Platykurtic, kurtosis < 3)')
+
+  # Customize the plot
+  plt.title('Examples of Mesokurtic, Leptokurtic, and Platykurtic Distributions')
+  plt.xlabel('X')
+  plt.ylabel('Probability Density')
+  plt.legend()
+  plt.savefig(fname)
+  return fname
+#+end_src
+
+#+RESULTS:
+[[file:images/normal_laplace_uniform.png]]
 
 
 * Journal
@@ -124,3 +295,5 @@
   - continuing from last break point
   - bewildered
     - the columns named "return_{n}d_lag{t}", what's the purpose?
+- [2023-10-05 Thu]
+  - bug fix: DataFrame.get_dummies creates new columns with default data type bool. but we need numerals (e.g. np.uint8) for OLS to work
