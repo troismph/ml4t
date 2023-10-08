@@ -153,8 +153,10 @@
     [[file:images/kurtosis.png]]
 - Durbin-Watson
   - [[https://en.wikipedia.org/wiki/Durbin%E2%80%93Watson_statistic][wikipedia link]]
-  - measurements of sample data autocorrelation
-  - 2 means no autocorrelation, 0 means perfect positive autocorrelation, 4 means perfect negative autocorrelation
+  - measurements of sample data autocorrelation, in [0, 4]
+  - 2: no autocorrelation
+  - 0: perfect positive autocorrelation
+  - 4: perfect negative autocorrelation
 - Jarque-Bera (JB) & Prob(JB)
   - alternative method like Omnibus
   - [[https://en.wikipedia.org/wiki/Jarque%E2%80%93Bera_test][wikipedia link]]
@@ -297,3 +299,6 @@ These are the fundamental concepts in null hypothesis testing. The specifics can
     - the columns named "return_{n}d_lag{t}", what's the purpose?
 - [2023-10-05 Thu]
   - bug fix: DataFrame.get_dummies creates new columns with default data type bool. but we need numerals (e.g. np.uint8) for OLS to work
+- [2023-10-07 Sat]
+  - understanding OLS model summary
+- [2023-10-08 Sun]
