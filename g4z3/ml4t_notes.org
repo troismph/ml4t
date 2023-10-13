@@ -34,7 +34,6 @@
   - pyfolio: portfolio and risk analytics in python
     - Alphalens is for factors
 
-
 * ML in trading
 
 - basic walk-through
@@ -204,9 +203,12 @@ These are the fundamental concepts in null hypothesis testing. The specifics can
 - TA-Lib: technical analysis lib. originally written in C++ , popularized by a python binding. see https://github.com/TA-Lib/ta-lib-python
 - Seaborn: data visualization toolkit
 - Yellowbrick: extension on scikit-learn for visualization, especially in cross validation & model selection
+- awesome-quant: a github project collecting awesome quant resources
+  - [[https://github.com/wilsonfreitas/awesome-quant][awesome-quant on github]]
+  - [[https://github.com/thuquant/awesome-quant][CN edition]]
+- possible future read: [[https://openintro-ims2.netlify.app/][Introduction to Modern Statistics 2]]
 
-
-** Quotes
+** quotes
 
 - Nassim Taleb: life is long gamma
 
@@ -302,3 +304,20 @@ These are the fundamental concepts in null hypothesis testing. The specifics can
 - [2023-10-07 Sat]
   - understanding OLS model summary
 - [2023-10-08 Sun]
+  - more on cross validation
+  - more on backtesting
+- [2023-10-09 Mon]
+  - zipline, alphalens, pyfolio
+  - mostly abandoned open source projects
+- [2023-10-10 Tue]
+  - continued reading on open source projects
+  - time series analysis
+    - stationarity
+- [2023-10-11 Wed]
+  - time seris analyais
+    - cointegration: fundamental theory behind statistical arbitrage
+    - ARIMA
+  - bayesian statistics
+- [2023-10-12 Thu]
+  - not much progress
+  - bewildered by the book, wtf...

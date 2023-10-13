@@ -10,21 +10,21 @@ from scipy.stats import spearmanr
 pd.set_option('display.expand_frame_repr', False)
 np.random.seed(42)
 
-PROJECT_DIR = Path('..', '..')
 
-DATA_DIR = PROJECT_DIR / 'data'
+DATA_STORE = '../../data/assets.h5'
+LINEAR_STORE = '../../data/linear.h5'
 
 
 def get_backtest_data(predictions='lasso/predictions'):
     """Combine chapter 7 lr/lasso/ridge regression predictions
         with adjusted OHLCV Quandl Wiki data"""
-    with pd.HDFStore(DATA_DIR / 'assets.h5') as store:
+    with pd.HDFStore(DATA_STORE) as store:
         prices = (store['quandl/wiki/prices']
                   .filter(like='adj')
                   .rename(columns=lambda x: x.replace('adj_', ''))
                   .swaplevel(axis=0))
 
-    with pd.HDFStore(PROJECT_DIR / '07_linear_models/data.h5') as store:
+    with pd.HDFStore(LINEAR_STORE) as store:
         print(store.info())
         predictions = store[predictions]
 
